@@ -41,6 +41,7 @@ const AddBtn = styled.div`
   margin-right: 20px;
   margin-left: 10px;
 `;
+
 const Form = ({ value, onChange, onCreate, onKeyPress, isModifying }) => {
   return (
     <InputForm className="form">
