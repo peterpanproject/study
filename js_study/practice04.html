@@ -1,0 +1,17 @@
+<body>
+  <script>
+        const solution = (participant, completion) => {
+        
+      completion.map((e) => {
+        participant.splice(participant.indexOf(e), 1);
+      });
+        
+      console.log(participant[0])
+    //   return answer = participant[0]
+    };
+
+    const participant = ["mislav", "stanko", "mislav", "ana"];
+    const completion = ["stanko", "ana", "mislav"];
+    solution(participant, completion);
+  </script>
+</body>

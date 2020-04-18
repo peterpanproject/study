@@ -1,0 +1,63 @@
+<body>
+  <script>
+    function solution(answers) {
+      const answer = [];
+      const answerCount = [[],[],[]];
+      const answerType = [
+        [1, 2, 3, 4, 5],
+        [2, 1, 2, 3, 2, 4, 2, 5],
+        [3, 3, 1, 1, 2, 2, 4, 4, 5, 5],
+      ];
+
+      for (let i = 0; i < answerType.length; i++) {
+        for (let j = 0; j < answers.length; j++) {
+          // console.log(i, j)
+          if ((i === 0)) {
+            answerType[i] <= 5
+              ? answerCount[i].push(answerType[i])
+              : answerCount[i].push(answerType[i] % 5);
+          } else if ((i === 1)) {
+            answerType[i] < 8
+              ? answerCount[i].push(answerType[i][j])
+              : answerCount[i].push(answerType[i][j % 8]);
+          } else if ((i === 2)) {
+            answerType[i] < 10
+              ? answerCount[i].push(answerType[i][j])
+              : answerCount[i].push(answerType[i][j % 10]);
+          }
+        }
+        console.log(answerCount);
+      }
+
+      // for (let i = 0; i < answers.length; i++) {
+      //   // console.log(first, second, third, answers)
+      //   if (first[i] === answers[i]) {
+      //     firstAnswerCount += 1;
+      //   }
+      //   if (second[i] === answers[i]) {
+      //     secondAnswerCount += 1;
+      //   }
+      //   if (third[i] === answers[i]) {
+      //     thirdAnswerCount += 1;
+      //   }
+      // }
+      // // console.log(firstAnswerCount, secondAnswerCount, thirdAnswerCount)
+
+      // let answerBefore = [
+      //   firstAnswerCount,
+      //   secondAnswerCount,
+      //   thirdAnswerCount,
+      // ];
+
+      // let MaxX = Math.max.apply(null, answerBefore);
+      // for (let i = 0; i < answerBefore.length; i++) {
+      //   answerBefore[i] === MaxX && answer.push(i + 1);
+      // }
+      // console.log(answer);
+      // return answer;
+    }
+
+    const answers = [1, 2, 3, 4, 5, 3, 2, 4, 1, 2, 3, 5, 4, 2];
+    solution(answers);
+  </script>
+</body>

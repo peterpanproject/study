@@ -1,0 +1,49 @@
+<body>
+  <script>
+    function solution(array, commands) {
+      const answer = [];
+      commands.map((el) => {
+        answer.push(
+          array.slice(el[0] - 1, el[1]).sort((a, b) => a - b)[el[2] - 1]
+        );
+      });
+      return answer;
+    }
+
+    const array = [1, 5, 2, 6, 3, 7, 4];
+    const commands = [
+      [2, 5, 3],
+      [4, 4, 1],
+      [1, 7, 3],
+    ];
+    solution(array, commands);
+  </script>
+</body>
+
+<!-- <body>
+    <script>
+      function solution(array, commands) {
+        if (array.length >= 1 && array.length <= 100) {
+          for (let i = 0; i < array.length; i++) {
+            if (i >= 1 && i <= 100) {
+                if(commands.length>=1&&commands.length<=50){
+                    for(let j=0; j<commands.length; j++){
+              const answer = [];
+              commands.map((el) => {
+                answer.push(array.slice(el[0] - 1, el[1]).sort()[el[2] - 1]);
+              });
+              return answer;}}
+            }
+          }
+        }
+      }
+  
+      const array = [1, 5, 2, 6, 3, 7, 4];
+      const commands = [
+        [2, 5, 3],
+        [4, 4, 1],
+        [1, 7, 3],
+      ];
+      solution(array, commands);
+    </script>
+  </body> -->

@@ -1,0 +1,40 @@
+<div id="root">
+  <input onClick="handlerSubmit()" type="button" value="실행" />
+  <ul id="list"></list>
+</div>
+<script>
+  const handlerSubmit = () => {
+    const userInput = prompt("테스트 개수를 넣으세요");
+    if (userInput < 1 || userInput > 100000) {
+      alert("숫자는 1부터 100,000까지만 가능합니다");
+      handlerSubmit();
+    } else {
+      const ans = [];
+      for (let i = 0; i < userInput; i++) {
+        const text_int = prompt(`${i + 1}번째 테스트 케이스 문자열의 길이`);
+         const text_que = prompt(`따라 적을 ${i + 1}번째 문자열을 넣으세요`);
+         const text_ans = prompt(`방금 적은 문자열을 따라 적으세요`);
+        ans.push({ text_int: [text_que, text_ans] });
+      }
+      for (let i = 0; i < ans.length; i++) {
+        let queCount = [];
+        let ansCount = [];
+
+        for (let j = 0; j < ans[i].text_int[0].length; j++) {
+          queCount.push(ans[i].text_int[0].substring(j, j + 1));
+          ansCount.push(ans[i].text_int[1].substring(j, j + 1));
+        }
+
+        let wrongCountResult = 0;
+        for (let k = 0; k < queCount.length; k++) {
+          queCount[k] !== ansCount[k] && (wrongCountResult = wrongCountResult + 1);
+        }
+
+        const listItem = document.createElement("li");
+        listItem.innerText= `문제: ${ans[i].text_int[0]} ## ${ans[i].text_int[1]} 답: ${queCount.length - wrongCountResult}`;
+        const list = document.getElementById("list");
+        list.appendChild(listItem);
+      }
+    }
+  };
+</script>
