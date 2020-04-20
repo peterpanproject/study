@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import useFormValidation from "../Components/useFormValidation";
+import validateLogin from "../Components/validateLogin";
+import firebase from "firebase";
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,7 +56,7 @@ const InputName = styled.input`
   border: 2px solid #2f3339;
   border-radius: 4px;
 `;
-const InputID = styled.input`
+const InputEmail = styled.input`
   width: 220px;
   height: 30px;
   padding-left: 15px;
@@ -93,9 +95,23 @@ const INITIAL_STATE = {
 
 const Login = (props) => {
   const [login, setLogin] = useState(true);
-  const { handleChange, handleSubmit, values } = useFormValidation(
-    INITIAL_STATE
-  );
+  const {
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+    handleBlur,
+    values,
+    errors,
+  } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
+
+  function authenticateUser() {
+    const { name, email, password } = values;
+    const response = login
+      ? firebase.login(email, password)
+      : firebase.register(name, email, password);
+    console.log({ response });
+  }
+  
   return (
     <Wrapper>
       <LoginContainer>
@@ -110,30 +126,40 @@ const Login = (props) => {
               type="text"
               name="name"
               placeholder="NAME"
+              autoComplete="off"
             />
           )}
-          <InputID
+          <InputEmail
             onChange={handleChange}
+            onBlur={handleBlur}
             type="email"
             name="email"
             placeholder="EMAIL"
+            autoComplete="off"
           />
+          {errors.email && <p>{errors.email}</p>}
           <InputPW
             onChange={handleChange}
             type="password"
             name="password"
             placeholder="PASSWORD"
+            autoComplete="off"
           />
+          {errors.password && <p>{errors.password}</p>}
+
           {!login && (
             <InputPW
               onChange={handleChange}
               type="password"
               name="passwordCheck"
               placeholder="CONFIRM PASSWORD"
+              autoComplete="off"
             />
           )}
 
-          <SubmitBtn type="submit">{login ? "LOGIN" : "REGISTER"}</SubmitBtn>
+          <SubmitBtn type="submit" disabled={isSubmitting}>
+            {login ? "LOGIN" : "REGISTER"}
+          </SubmitBtn>
         </InputForm>
       </LoginContainer>
     </Wrapper>
