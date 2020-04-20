@@ -23,7 +23,6 @@ const Todo = () => {
   const handleCreate = () => {
     if (!isModifying) {
       setInput(""); // 인풋 비우고
-      // concat 을 사용하여 배열에 추가
       setTodos([...todos, { id: id++, text: input, checked: false }]);
     } else {
       const index = modifyingIndex;
