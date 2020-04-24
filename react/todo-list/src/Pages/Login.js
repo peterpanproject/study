@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import useFormValidation from "../Components/useFormValidation";
 import validateLogin from "../Components/validateLogin";
-import firebase from "firebase";
+// import firebase from "firebase";
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,7 +60,6 @@ const InputEmail = styled.input`
   width: 220px;
   height: 30px;
   padding-left: 15px;
-  margin-bottom: 13px;
   border: 2px solid #2f3339;
   border-radius: 4px;
 `;
@@ -68,7 +67,7 @@ const InputPW = styled.input`
   width: 220px;
   height: 30px;
   padding-left: 15px;
-  margin-bottom: 15px;
+  margin-top: 30px;
   border: 2px solid #2f3339;
   border-radius: 4px;
 `;
@@ -84,6 +83,7 @@ const SubmitBtn = styled.button`
   font-size: 1rem;
   font-weight: 500;
   color: white;
+  margin-top: 30px;
 `;
 
 const INITIAL_STATE = {
@@ -102,16 +102,18 @@ const Login = (props) => {
     handleBlur,
     values,
     errors,
-  } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
+  } = useFormValidation(INITIAL_STATE, validateLogin);
+  // } = useFormValidation(INITIAL_STATE, validateLogin, authenticateUser);
 
-  function authenticateUser() {
-    const { name, email, password } = values;
-    const response = login
-      ? firebase.login(email, password)
-      : firebase.register(name, email, password);
-    console.log({ response });
-  }
-  
+  // function authenticateUser() {
+  //   console.log("authenticate")
+  //   const { name, email, password } = values;
+  //   const response = login
+  //     ? firebase.login(email, password)
+  //     : firebase.register(name, email, password);
+  //   console.log({ response });
+  // }
+
   return (
     <Wrapper>
       <LoginContainer>
@@ -125,6 +127,7 @@ const Login = (props) => {
               onChange={handleChange}
               type="text"
               name="name"
+              value={values.name}
               placeholder="NAME"
               autoComplete="off"
             />
@@ -134,18 +137,20 @@ const Login = (props) => {
             onBlur={handleBlur}
             type="email"
             name="email"
+            value={values.email}
             placeholder="EMAIL"
             autoComplete="off"
           />
-          {errors.email && <p>{errors.email}</p>}
+          {errors.email ? <div>{errors.email}</div> : <div>{""}</div>}
           <InputPW
             onChange={handleChange}
             type="password"
             name="password"
+            value={values.password}
             placeholder="PASSWORD"
             autoComplete="off"
           />
-          {errors.password && <p>{errors.password}</p>}
+          {errors.password ? <div>{errors.password}</div> : <div></div>}
 
           {!login && (
             <InputPW

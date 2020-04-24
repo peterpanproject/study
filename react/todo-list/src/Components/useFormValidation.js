@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const useFormValidation = (initialState, validate, authenticate) => {
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (isSubmitting) {
-      const noErrors = Object.keys(errors).length === 0;
-      if (noErrors) {
-        authenticate();
-        setIsSubmitting(false);
-      } else {
-        setIsSubmitting(false);
-      }
-    }
-  }, [errors]);
+  // useEffect(() => {
+  //   if (isSubmitting) {
+  //     const noErrors = Object.keys(errors).length === 0;
+  //     if (noErrors) {
+  //       authenticate();
+  //       setIsSubmitting(false);
+  //     } else {
+  //       setIsSubmitting(false);
+  //     }
+  //   }
+  // }, [errors]);
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
