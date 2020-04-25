@@ -1,0 +1,3 @@
+[submodule "react/heroes-mobx-react-lite"]
+	path = react/heroes-mobx-react-lite
+	url = https://github.com/webmasterdevlin/heroes-mobx-react-lite.git
