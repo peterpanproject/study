@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TodoListTemplate from "../Components/TodoListTemplate";
 import Form from "../Components/Form";
 import TodoItemList from "../Components/TodoItemList";
+import { TodoContext } from "../Context/todo-context";
 
 const Todo = () => {
+  const store = useContext(TodoContext);
   let id = 3; // 이미 0,1,2 가 존재하므로 3으로 설정
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([
@@ -18,6 +20,7 @@ const Todo = () => {
     setInput(
       e.target.value // input 의 다음 바뀔 값
     );
+    console.log(store.name);
   };
 
   const handleCreate = () => {
@@ -69,7 +72,6 @@ const Todo = () => {
   };
 
   const handleModify = (id) => {
-
     // 파라미터로 받은 id 를 가지고 몇번째 아이템인지 찾습니다.
     const index = todos.findIndex((todo) => todo.id === id);
     const selected = todos[index]; // 선택한 객체
