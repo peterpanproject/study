@@ -43,10 +43,10 @@ const TopContainer = styled.div`
 const Gender = styled.div``;
 const InputContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 61vh;
   background-color: lightblue;
 `;
 
@@ -54,10 +54,12 @@ const InputDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
   width: 50vh;
   height: 50vh;
-  cursor: pointer;
   background-color: yellowgreen;
+  cursor: pointer;
 `;
 const BottomContainer = styled.div`
   display: flex;
@@ -73,7 +75,8 @@ const Input = styled.input.attrs((props) => ({ type: "file" }))`
 
 const App = () => {
   const [result, setResult] = useState([]);
-  const [isChecked, setIsChecked] = useState(false)
+  const [isChecked, setIsChecked] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const [state, setState] = useState({
     file: "",
     imagePreviewUrl: "",
@@ -93,12 +96,13 @@ const App = () => {
       });
     };
     reader.readAsDataURL(file);
+    setIsDone(true);
     init().then(() => predict());
     // console.log(e.target.files[0]);
   };
 
   const onChangeGender = () => {
-    setIsChecked(!isChecked)
+    setIsChecked(!isChecked);
   };
 
   // Load the image model and setup the webcam
@@ -119,10 +123,10 @@ const App = () => {
     // predict can take in an image, video or canvas html element
     const prediction = await model.predict(
       document.getElementById("img_preview")
-    )
+    );
     await setResult(prediction);
   }
-
+  console.log(result);
   return (
     <WindowWrap>
       <Wrapper>
@@ -131,25 +135,29 @@ const App = () => {
           <Switch isChecked={isChecked} changeGender={onChangeGender} />
         </TopContainer>
         <InputContainer>
-          <InputDiv>
-            {!state.imagePreviewUrl && (
-              <label>
-                <InputDiv>이곳을 눌러서 사진을 올리세요.</InputDiv>
-                <Input
-                  onChange={(e) => {
-                    onChange(e);
-                  }}
-                />
-              </label>
-            )}
-            {state.imagePreviewUrl && (
-              <img
-                id="img_preview"
-                src={state.imagePreviewUrl}
-                alt="Your Face"
+          {!isDone ? (
+            <label>
+              <InputDiv>이곳을 눌러서 사진을 올리세요.</InputDiv>
+              <Input
+                onChange={(e) => {
+                  onChange(e);
+                }}
+                disabled={isDone}
               />
-            )}
-          </InputDiv>
+            </label>
+          ) : null}
+          {state.imagePreviewUrl && (
+            <img id="img_preview" src={state.imagePreviewUrl} alt="Your Face" />
+          )}
+          <hr />
+          {result &&
+            result.map((e) => (
+              <div>
+                {e.className}
+                {Math.round(e.probability * 100)}
+                <p />
+              </div>
+            ))}
         </InputContainer>
         <BottomContainer />
       </Wrapper>

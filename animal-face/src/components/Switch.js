@@ -14,7 +14,7 @@ const Switch = ({changeGender, isChecked}) => {
 //     console.log(isChecked);
 //     setIsChecked(!isChecked);
 //   }
-console.log(isChecked)
+
   return (
     <div className="switch-container">
       <label>
