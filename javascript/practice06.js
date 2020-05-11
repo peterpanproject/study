@@ -1,5 +1,6 @@
 function solution(n, lost, reserve) {
   let answer = n - lost.length;
+  
   for (let i = 0; i < lost.length; i++) {
     for (let j = 0; j < reserve.length; j++) {
       reserve[j] == lost[i] && (answer++, reserve.splice(j, 1), lost.splice(i, 1));
